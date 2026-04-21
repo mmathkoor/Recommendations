@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محرر الشهادات الاحترافي V2</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Changa:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(160deg, #2d0a4e 0%, #4a1080 30%, #7b1fa2 55%, #c66900 80%, #ff8c00 100%);
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --accent-orange: #ff8c00;
+        }
+
+        body {
+            font-family: 'Changa', sans-serif;
+            background: #0f0f12;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            color: white;
+        }
+
+        /* ----- التصميم الاحترافي الجديد ----- */
+        #story-container {
+            width: 400px;
+            height: 710px;
+            background: var(--primary-gradient);
+            border-radius: 45px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+        }
+
+        /* إضاءة خلفية خلف الشعار */
+        .logo-area {
+            padding: 35px 20px 15px;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .logo-glow {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(255,140,0,0.2) 0%, transparent 70%);
+            top: 20px;
+            z-index: 1;
+        }
+
+        .logo-wrapper img {
+            max-height: 100px;
+            border-radius: 22px;
+            position: relative;
+            z-index: 2;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+        }
+
+        .client-name-area {
+            padding: 0 35px;
+            min-height: 40px; /* لضمان عدم القفز عند الظهور/الاختفاء */
+            margin-top: 10px;
+        }
+
+        /* الميزة المطلوبة: إخفاء تلقائي إذا كان فارغاً */
+        .client-name-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            padding: 6px 22px;
+            border-radius: 50px;
+            font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.2);
+            font-size: 17px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .chat-area {
+            flex: 1;
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        .premium-bubble {
+            background: var(--glass-bg);
+            border-radius: 30px 30px 30px 5px;
+            padding: 28px 25px;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 25px 50px -10px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+
+        .chat-text {
+            color: #1a1a2e;
+            font-size: 17px;
+            line-height: 1.8;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .stars-row {
+            color: #ffb300;
+            font-size: 24px;
+            letter-spacing: 3px;
+        }
+
+        .footer-text {
+            height: 90px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0,0,0,0.15);
+        }
+
+        .footer-text span {
+            font-size: 28px;
+            font-weight: 800;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            unicode-bidi: isolate;
+        }
+
+        /* ----- لوحة التحكم ----- */
+        .controls {
+            margin-top: 30px;
+            background: #1c1c25;
+            padding: 30px;
+            border-radius: 30px;
+            width: 450px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            border: 1px solid #333;
+        }
+
+        input, textarea, select {
+            background: #2a2a35;
+            border: 1px solid #444;
+            color: white;
+            padding: 12px;
+            border-radius: 12px;
+            font-family: 'Changa';
+        }
+
+        .btn-download {
+            background: linear-gradient(90deg, #ff8c00, #ff5e00);
+            border: none;
+            padding: 15px;
+            border-radius: 15px;
+            color: white;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="story-container">
+        <div class="logo-area">
+            <div class="logo-glow"></div>
+            <div class="logo-wrapper">
+                <img id="live-logo" src="https://play-lh.googleusercontent.com/aKnEnS9l-WFlBZ8HxXnjcswLvY7TguaShLNjIlkzrtZtCDu9EDaVr-2vqMuVO-BJEQ=w240-h480-rw" crossorigin="anonymous">
+            </div>
+        </div>
+
+        <div class="client-name-area" id="nameWrapper">
+            <span class="client-name-badge" id="live-name">أ. فهد العنزي</span>
+        </div>
+
+        <div class="chat-area">
+            <div class="premium-bubble">
+                <p class="chat-text" id="live-text">صحيح، يا أستاذ مروان. أنتم الرقم واحد في التسويق الإلكتروني، تقييمي لكم هو خمس نجوم كاملة.</p>
+                <div class="stars-row" id="live-stars">★★★★★</div>
+                <div style="position: absolute; bottom: 15px; left: 20px; color: #888; font-size: 12px; direction: ltr;">
+                    <span id="live-time">3:48 PM</span> ✓✓
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-text">
+            <span>ما يقوله عملاؤنا عنا</span>
+        </div>
+    </div>
+
+    <div class="controls">
+        <label>اسم العميل (اتركه فارغاً للإخفاء):</label>
+        <input type="text" id="in-name" value="أ. فهد العنزي">
+        
+        <label>رابط الشعار:</label>
+        <input type="text" id="in-logo" value="https://play-lh.googleusercontent.com/aKnEnS9l-WFlBZ8HxXnjcswLvY7TguaShLNjIlkzrtZtCDu9EDaVr-2vqMuVO-BJEQ=w240-h480-rw">
+        
+        <label>الشهادة:</label>
+        <textarea id="in-text">صحيح، يا أستاذ مروان. أنتم الرقم واحد في التسويق الإلكتروني، تقييمي لكم هو خمس نجوم كاملة.</textarea>
+        
+        <div style="display: flex; gap: 10px;">
+            <input type="time" id="in-time" value="15:48" style="flex: 1;">
+            <select id="in-stars" style="flex: 1;">
+                <option value="5">5 نجوم</option>
+                <option value="4">4 نجوم</option>
+            </select>
+        </div>
+        
+        <button class="btn-download" id="btnExport">حفظ كصورة PNG احترافية</button>
+    </div>
+
+    <script>
+        const inName = document.getElementById('in-name');
+        const inText = document.getElementById('in-text');
+        const inLogo = document.getElementById('in-logo');
+        const inStars = document.getElementById('in-stars');
+        const inTime = document.getElementById('in-time');
+
+        const liveName = document.getElementById('live-name');
+        const nameWrapper = document.getElementById('nameWrapper');
+        const liveText = document.getElementById('live-text');
+        const liveLogo = document.getElementById('live-logo');
+        const liveStars = document.getElementById('live-stars');
+        const liveTime = document.getElementById('live-time');
+
+        // وظيفة التحديث الذكي للاسم
+        inName.oninput = () => {
+            const val = inName.value.trim();
+            if(val === "") {
+                nameWrapper.style.visibility = "hidden"; // يخفي العنصر تماماً
+            } else {
+                nameWrapper.style.visibility = "visible";
+                liveName.innerText = val;
+            }
+        };
+
+        inText.oninput = () => liveText.innerText = inText.value;
+        inLogo.oninput = () => liveLogo.src = inLogo.value;
+        inStars.onchange = () => liveStars.innerText = '★'.repeat(inStars.value) + '☆'.repeat(5-inStars.value);
+        inTime.oninput = () => {
+            let [h, m] = inTime.value.split(':');
+            let ampm = h >= 12 ? 'PM' : 'AM';
+            h = h % 12 || 12;
+            liveTime.innerText = `${h}:${m} ${ampm}`;
+        };
+
+        document.getElementById('btnExport').onclick = async function() {
+            this.innerText = "جاري المعالجة...";
+            const canvas = await html2canvas(document.getElementById('story-container'), {
+                scale: 3,
+                useCORS: true,
+                backgroundColor: null
+            });
+            const link = document.createElement('a');
+            link.download = 'testimonial-premium.png';
+            link.href = canvas.toDataURL();
+            link.click();
+            this.innerText = "حفظ كصورة PNG احترافية";
+        };
+    </script>
+</body>
+</html>
